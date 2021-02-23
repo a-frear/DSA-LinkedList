@@ -273,27 +273,35 @@ function WhatDoesThisProgramDo(list) {
 //Takes the values in the list and removes the duplicates.
 
 function third(list) {
-  let index = 0
-  let bounds = size(list)
-  let currNode = list.head
-  while (currNode !== null && index !== bounds -3) {
-    currNode = currNode.next
-    index++
-  }
-  return currNode.value
+  // let index = 0
+  // let bounds = size(list)
+  // let currNode = list.head
+  // while (currNode !== null && index !== bounds -3) {
+  //   currNode = currNode.next
+  //   index++
+  // }
+  // return currNode.value
+  return list.head.next.next.value
 }
 
-console.log('Third in list: ' + third(SLL))
+/*
+To solve this without using index or length:
+that seems too easy?
+Is the head in a linked 0 or 1?
+*/
+
+console.log('List is: ' + display(SLL) + ' and third in list is: ' + third(SLL))
 
 function middle(list) {
-  let index = 0
+  // let index = 0
+  // let bounds = size(list)
+  // let currNode = list.head
+  // while (currNode !== null && index !== Math.floor(bounds / 2)) {
+  //   currNode = currNode.next
+  //   index++
+  // }
+  // return currNode.value
   let bounds = size(list)
-  let currNode = list.head
-  while (currNode !== null && index !== Math.floor(bounds / 2)) {
-    currNode = currNode.next
-    index++
-  }
-  return currNode.value
 }
 
 console.log('Middle of list: ' + middle(SLL))
@@ -324,3 +332,42 @@ function cycles(list) {
   return "This list has no cycle!";
 }
 console.log(cycles(CycleList));
+
+/*
+Sorting a list
+Write an algorithm that will sort a given linked list. 
+For example given a list such as 3->2->5->7->1, 
+your program will output the sorted version of this list 
+which will be 1->2->3->5->7. You may not use another list 
+or any other data structure such as an array to store the data.
+*/
+
+function sort(list) {
+  let currNode = list.head
+  let tempNode = null
+  while (currNode !== null) {
+    if (currNode.value < currNode.next.value) {
+      tempNode = currNode
+      list.head = tempNode
+      currNode = list.head.next
+      //I am having trouble with this because I can only think of arrays...
+      //how do I 'push' to a new linked list?
+      //or can I rearrange the current linked list?
+    }
+    return display(list)
+  }
+}
+
+function sortMe() {
+  const numList = new LinkedList()
+  numList.insertFirst(5)
+  numList.insertLast(3)
+  numList.insertLast(1)
+  numList.insertLast(2)
+  numList.insertLast(4)
+  return numList
+}
+
+const numList = sortMe();
+console.log('New List: ' + display(numList))
+console.log('Sorted: ' + sort(numList))
