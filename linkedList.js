@@ -139,17 +139,11 @@ class LinkedList {
 function main() {
     const SLL = new LinkedList()
     SLL.insertFirst("Apollo")
-    console.log(SLL)
     SLL.insertLast("Boomer")
-    console.log(SLL)
     SLL.insertLast("Helo")
     SLL.insertLast("Husker")
     SLL.insertLast("Starbuck")
     SLL.insertLast("Tauhida")
-    console.log(SLL.head.next)
-    SLL.remove("Husker")
-
-  
     return SLL
   }
   
@@ -273,38 +267,49 @@ function WhatDoesThisProgramDo(list) {
 //Takes the values in the list and removes the duplicates.
 
 function third(list) {
-  // let index = 0
-  // let bounds = size(list)
-  // let currNode = list.head
-  // while (currNode !== null && index !== bounds -3) {
-  //   currNode = currNode.next
-  //   index++
-  // }
-  // return currNode.value
-  return list.head.next.next.value
+  if (!list.head || list.head === null) {
+    return null;
+  }
+  if (list.head.next === null || list.head.next.next === null) {
+    return "Not enough items on list";
+  }
+  // else
+  let currNode = list.head;
+  while (currNode.next.next.next !== null) {
+    currNode = currNode.next;
+  }
+  return currNode.value;
 }
-
-/*
-To solve this without using index or length:
-that seems too easy?
-Is the head in a linked 0 or 1?
-*/
 
 console.log('List is: ' + display(SLL) + ' and third in list is: ' + third(SLL))
 
 function middle(list) {
-  // let index = 0
-  // let bounds = size(list)
-  // let currNode = list.head
-  // while (currNode !== null && index !== Math.floor(bounds / 2)) {
-  //   currNode = currNode.next
-  //   index++
-  // }
-  // return currNode.value
-  let bounds = size(list)
-}
+  // Traverse linked list using two pointers. 
+  // Move one pointer by one and the other pointers by two. 
+  // When the fast pointer reaches the end 
+  // slow pointer will reach the middle of the linked list.
+  if (!list.head) {
+    return null
+  }
+  if (list.head.next === null) {
+    return list.head.value
+  }
+  if (list.head.next.next === null) {
+    return list.head.next.value
+  }
+  let fastPointer = list.head.next.next
+  let slowPointer = list.head
+    while (fastPointer.next !== null) {
+        fastPointer = fastPointer.next.next
+        slowPointer = slowPointer.next
+        if (fastPointer === null) {
+          return slowPointer.value
+        }
+      }
+    return slowPointer.next.value
+  }
 
-console.log('Middle of list: ' + middle(SLL))
+console.log('list : ' + display(SLL) + ' and Middle of list: ' + middle(SLL))
 
 //I don't know how to create a cycle in CycleList
 
@@ -343,27 +348,29 @@ or any other data structure such as an array to store the data.
 */
 
 function sort(list) {
-  let currNode = list.head
-  let tempNode = null
-  while (currNode !== null) {
-    if (currNode.value < currNode.next.value) {
-      tempNode = currNode
-      list.head = tempNode
-      currNode = list.head.next
-      //I am having trouble with this because I can only think of arrays...
-      //how do I 'push' to a new linked list?
-      //or can I rearrange the current linked list?
+  let swaps = null
+  while (swaps !== 0) {
+    let currNode = list.head
+    swaps = 0
+    while (currNode !== null) {
+      if (currNode.next !== null && currNode.value > currNode.next.value) {
+        let tempNode = currNode.value
+        currNode.value = currNode.next.value
+        currNode.next.value = tempNode
+        swaps = swaps + 1
+      }
+      currNode = currNode.next
     }
-    return display(list)
   }
+  return display(list)
 }
 
 function sortMe() {
   const numList = new LinkedList()
-  numList.insertFirst(5)
+  numList.insertFirst(9)
   numList.insertLast(3)
   numList.insertLast(1)
-  numList.insertLast(2)
+  numList.insertLast(24)
   numList.insertLast(4)
   return numList
 }
